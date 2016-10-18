@@ -1,17 +1,24 @@
 var scrollCounter = 1
+var query = 'tiger'
 $(document).ready(function() {
-  callAJAX(scrollCounter)
+  callAJAX(scrollCounter, query)
+  $(".title-search").keyup(function(){
+    query = $(this).val()
+    $(".container").empty()
+    callAJAX(scrollCounter,$(this).val())
+  })
+
   $(window).scroll(function(event) {
     if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
-       callAJAX(scrollCounter)
+       callAJAX(scrollCounter,query)
      }
   });
 });
 
-function callAJAX(page) {
+function callAJAX(page,query) {
   scrollCounter += 1
   $.ajax({
-    url: 'http://www.omdbapi.com/?s=tiger&y=&plot=short&r=json&page=' + page,
+    url: 'http://www.omdbapi.com/?s=' + query + '&y=&plot=short&r=json&page=' + page,
     type: 'GET',
     dataType: 'json',
     data: {param1: 'value1'}
